@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Swoop — социальная сеть</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="body">
+
+  <section id="loginScreen" class="auth-screen">
+    <div class="auth-screen__card">
+      <div class="auth-screen__logo-wrapper">
+        <span class="auth-screen__logo-icon">🪽</span>
+        <h1 class="auth-screen__logo">Swoop</h1>
+      </div>
+      <p class="auth-screen__subtitle">Войдите, чтобы оставаться на связи</p>
+
+      <form id="loginForm" class="auth-screen__form" novalidate>
+        <div class="auth-screen__field">
+          <label for="loginEmail" class="auth-screen__label">Email</label>
+          <input type="email" id="loginEmail" class="auth-screen__input" placeholder="swooper@example.com" required autocomplete="email">
+          <span class="auth-screen__error" id="loginEmailError"></span>
+        </div>
+
+        <div class="auth-screen__field">
+          <label for="loginPassword" class="auth-screen__label">Пароль</label>
+          <input type="password" id="loginPassword" class="auth-screen__input" placeholder="••••••••" required autocomplete="current-password">
+          <span class="auth-screen__error" id="loginPasswordError"></span>
+        </div>
+
+        <button type="submit" class="auth-screen__btn auth-screen__btn--primary">Войти</button>
+        <button type="button" id="goToRegisterBtn" class="auth-screen__btn auth-screen__btn--secondary">Регистрация</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="registerScreen" class="auth-screen hidden">
+    <div class="auth-screen__card">
+      <div class="auth-screen__logo-wrapper">
+        <span class="auth-screen__logo-icon">🪽</span>
+        <h1 class="auth-screen__logo">Swoop</h1>
+      </div>
+      <p class="auth-screen__subtitle">Присоединяйтесь к нам</p>
+
+      <form id="registerForm" class="auth-screen__form" novalidate>
+        <div class="auth-screen__row">
+          <div class="auth-screen__field auth-screen__field--half">
+            <label for="regFirstName" class="auth-screen__label">Имя</label>
+            <input type="text" id="regFirstName" class="auth-screen__input" placeholder="Иван" required>
+            <span class="auth-screen__error" id="regFirstNameError"></span>
+          </div>
+          <div class="auth-screen__field auth-screen__field--half">
+            <label for="regLastName" class="auth-screen__label">Фамилия</label>
+            <input type="text" id="regLastName" class="auth-screen__input" placeholder="Иванов" required>
+            <span class="auth-screen__error" id="regLastNameError"></span>
+          </div>
+        </div>
+
+        <div class="auth-screen__row">
+          <div class="auth-screen__field auth-screen__field--half">
+            <label for="regCity" class="auth-screen__label">Город</label>
+            <input type="text" id="regCity" class="auth-screen__input" placeholder="Москва" required>
+            <span class="auth-screen__error" id="regCityError"></span>
+          </div>
+          <div class="auth-screen__field auth-screen__field--half">
+            <label for="regUniversity" class="auth-screen__label">Учебное заведение</label>
+            <input type="text" id="regUniversity" class="auth-screen__input" placeholder="МГУ" required>
+            <span class="auth-screen__error" id="regUniversityError"></span>
+          </div>
+        </div>
+
+        <div class="auth-screen__field">
+          <label for="regEmail" class="auth-screen__label">Email</label>
+          <input type="email" id="regEmail" class="auth-screen__input" placeholder="swooper@example.com" required autocomplete="email">
+          <span class="auth-screen__error" id="regEmailError"></span>
+        </div>
+
+        <div class="auth-screen__field">
+          <label for="regPassword" class="auth-screen__label">Пароль</label>
+          <input type="password" id="regPassword" class="auth-screen__input" placeholder="минимум 3 символа" required autocomplete="new-password" minlength="3">
+          <span class="auth-screen__error" id="regPasswordError"></span>
+        </div>
+
+        <button type="submit" class="auth-screen__btn auth-screen__btn--primary">Зарегистрироваться</button>
+        <button type="button" id="goToLoginBtn" class="auth-screen__btn auth-screen__btn--secondary">Назад ко входу</button>
+      </form>
+    </div>
+  </section>
+
+  <main id="mainScreen" class="main-layout hidden">
+
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <span class="sidebar__brand-icon">🪽</span>
+        <span class="sidebar__brand-text">Swoop</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <button class="sidebar__tab sidebar__tab--active" data-tab="profile">
+          <span class="sidebar__tab-icon">👤</span>
+          <span class="sidebar__tab-label">Мой профиль</span>
+        </button>
+        <button class="sidebar__tab" data-tab="friends">
+          <span class="sidebar__tab-icon">👥</span>
+          <span class="sidebar__tab-label">Друзья</span>
+        </button>
+        <button class="sidebar__tab" data-tab="communities">
+          <span class="sidebar__tab-icon">🌐</span>
+          <span class="sidebar__tab-label">Сообщества</span>
+        </button>
+        <button class="sidebar__tab" data-tab="messenger">
+          <span class="sidebar__tab-icon">💬</span>
+          <span class="sidebar__tab-label">Мессенджер</span>
+        </button>
+        <button class="sidebar__tab" data-tab="settings">
+          <span class="sidebar__tab-icon">⚙️</span>
+          <span class="sidebar__tab-label">Настройки</span>
+        </button>
+      </nav>
+
+      <button id="logoutBtn" class="btn btn--logout sidebar__logout">
+        <span class="sidebar__logout-label">Выйти из аккаунта</span>
+      </button>
+    </aside>
+
+    <div class="content-area" id="contentArea">
+
+      <div id="profileTab" class="tab">
+        <h2 class="tab__title">Мой профиль</h2>
+
+        <div class="profile-card">
+          <div class="profile-card__header">
+            <div class="profile-card__avatar" id="my-profile-avatar">АИ</div>
+            <div class="profile-card__info">
+              <h3 class="profile-card__name" id="profile-name">Артём Иванов</h3>
+              <span class="profile-card__status">Открыт к общению</span>
+            </div>
+            <button id="open-edit-modal-btn" class="profile-card__edit-btn btn btn--outline">✏️ Редактировать</button>
+          </div>
+
+          <div class="profile-card__details">
+            <div class="profile-card__detail">
+              <span class="profile-card__detail-icon">🏙️</span>
+              <span class="profile-card__detail-text">Город: <span id="detail-city">Москва</span></span>
+            </div>
+            <div class="profile-card__detail">
+              <span class="profile-card__detail-icon">🎓</span>
+              <span class="profile-card__detail-text">ВУЗ: <span id="detail-university">МФТИ</span></span>
+            </div>
+            <div class="profile-card__detail">
+              <span class="profile-card__detail-icon">✉️</span>
+              <span class="profile-card__detail-text" id="detail-email">test@mail.ru</span>
+            </div>
+            <div class="profile-card__detail">
+              <span class="profile-card__detail-icon">📞</span>
+              <span class="profile-card__detail-text" id="detail-phone">+7 (999) 123-45-67</span>
+            </div>
+          </div>
+
+          <div class="profile-card__interests">
+            <h4 class="profile-card__interests-title">Интересы</h4>
+            <div class="profile-card__tags" id="interests-container">
+              <span class="profile-card__tag">Программирование</span>
+              <span class="profile-card__tag">Дизайн</span>
+              <span class="profile-card__tag">Киберспорт</span>
+              <span class="profile-card__tag">Стартапы</span>
+              <span class="profile-card__tag">Музыка</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wall">
+          <h3 class="wall__title">Стена</h3>
+
+          <form class="wall__form" id="postForm">
+            <textarea class="wall__textarea" placeholder="Что у вас нового?" rows="3"></textarea>
+            <div class="wall__form-actions">
+              <button type="submit" class="wall__submit-btn btn btn--primary">Опубликовать</button>
+            </div>
+          </form>
+
+          <div class="wall__posts" id="postsList">
+            <article class="post">
+              <div class="post__header">
+                <div class="post__avatar">АИ</div>
+                <div class="post__author-info">
+                  <span class="post__author-name">Артём Иванов</span>
+                  <span class="post__date">5 минут назад</span>
+                </div>
+              </div>
+              <p class="post__text">Привет, Swoop! Это мой первый пост в этой социальной сети. Очень рад быть здесь! 🚀</p>
+              <div class="post__actions">
+                <button class="post__action-btn post__like-btn">
+                  <span class="post__action-icon">❤️</span>
+                  <span class="post__action-count">24</span>
+                </button>
+                <button class="post__action-btn post__comment-btn">
+                  <span class="post__action-icon">💬</span>
+                  <span class="post__action-label">Комментировать</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="post">
+              <div class="post__header">
+                <div class="post__avatar">ОС</div>
+                <div class="post__author-info">
+                  <span class="post__author-name">Ольга Смирнова</span>
+                  <span class="post__date">1 час назад</span>
+                </div>
+              </div>
+              <p class="post__text">Только что закончила новый дизайн-проект! Делюсь вдохновением ✨</p>
+              <div class="post__actions">
+                <button class="post__action-btn post__like-btn">
+                  <span class="post__action-icon">❤️</span>
+                  <span class="post__action-count">47</span>
+                </button>
+                <button class="post__action-btn post__comment-btn">
+                  <span class="post__action-icon">💬</span>
+                  <span class="post__action-label">Комментировать</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="post">
+              <div class="post__header">
+                <div class="post__avatar">ДК</div>
+                <div class="post__author-info">
+                  <span class="post__author-name">Дмитрий Козлов</span>
+                  <span class="post__date">3 часа назад</span>
+                </div>
+              </div>
+              <p class="post__text">Ищу команду для хакатона! Кто со мной? Пишите в личку 💪</p>
+              <div class="post__actions">
+                <button class="post__action-btn post__like-btn">
+                  <span class="post__action-icon">❤️</span>
+                  <span class="post__action-count">12</span>
+                </button>
+                <button class="post__action-btn post__comment-btn">
+                  <span class="post__action-icon">💬</span>
+                  <span class="post__action-label">Комментировать</span>
+                </button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div id="friendsTab" class="tab hidden">
+        <h2 class="tab__title">Друзья</h2>
+
+        <div class="friends-search">
+          <input type="text" id="friendSearchInput" class="friends-search__input" placeholder="Поиск друзей...">
+        </div>
+
+        <section class="friends-section">
+          <h3 class="friends-section__title">Рекомендации</h3>
+          <div class="grid" id="recommendationsGrid">
+            <div class="friend-card">
+              <div class="friend-card__avatar">👩‍💻</div>
+              <div class="friend-card__name">Екатерина Волкова</div>
+              <div class="friend-card__mutual">3 общих друга</div>
+              <button class="friend-card__add-btn btn btn--primary">Добавить</button>
+            </div>
+            <div class="friend-card">
+              <div class="friend-card__avatar">🧑‍🔬</div>
+              <div class="friend-card__name">Алексей Новиков</div>
+              <div class="friend-card__mutual">1 общий друг</div>
+              <button class="friend-card__add-btn btn btn--primary">Добавить</button>
+            </div>
+            <div class="friend-card">
+              <div class="friend-card__avatar">👩‍🎨</div>
+              <div class="friend-card__name">Мария Соколова</div>
+              <div class="friend-card__mutual">5 общих друзей</div>
+              <button class="friend-card__add-btn btn btn--primary">Добавить</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="friends-section">
+          <h3 class="friends-section__title">Мои друзья (<span id="friendsCount">3</span>)</h3>
+          <div class="grid" id="friendsGrid">
+            <div class="friend-card">
+              <div class="friend-card__avatar">👩‍🦰</div>
+              <div class="friend-card__name">Ольга Смирнова</div>
+              <div class="friend-card__mutual">Друг</div>
+              <button class="friend-card__remove-btn btn btn--danger">Удалить</button>
+            </div>
+            <div class="friend-card">
+              <div class="friend-card__avatar">🧔</div>
+              <div class="friend-card__name">Дмитрий Козлов</div>
+              <div class="friend-card__mutual">Друг</div>
+              <button class="friend-card__remove-btn btn btn--danger">Удалить</button>
+            </div>
+            <div class="friend-card">
+              <div class="friend-card__avatar">👩🏻</div>
+              <div class="friend-card__name">Анна Белова</div>
+              <div class="friend-card__mutual">Друг</div>
+              <button class="friend-card__remove-btn btn btn--danger">Удалить</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="communitiesTab" class="tab hidden">
+        <h2 class="tab__title">Сообщества</h2>
+        <button id="open-create-group-btn" class="btn btn--primary" style="margin-bottom: 1.5rem;">+ Создать сообщество</button>
+        <div class="grid" id="communitiesGrid">
+          <div class="community-card">
+            <div class="community-card__header">
+              <div class="community-card__icon">🚀</div>
+              <h3 class="community-card__name">Стартап-тусовка</h3>
+            </div>
+            <p class="community-card__description">Обсуждаем идеи, питчи и ищем инвесторов. Присоединяйтесь к сообществу предпринимателей!</p>
+            <div class="community-card__meta">
+              <span class="community-card__members">👥 142 участников</span>
+            </div>
+            <button class="community-card__join-btn btn btn--primary">Вступить</button>
+          </div>
+
+          <div class="community-card">
+            <div class="community-card__header">
+              <div class="community-card__icon">🎨</div>
+              <h3 class="community-card__name">Дизайн и UX</h3>
+            </div>
+            <p class="community-card__description">Figma, исследования пользователей, портфолио и тренды в дизайне интерфейсов.</p>
+            <div class="community-card__meta">
+              <span class="community-card__members">👥 89 участников</span>
+            </div>
+            <button class="community-card__join-btn btn btn--outline">Покинуть</button>
+          </div>
+
+          <div class="community-card">
+            <div class="community-card__header">
+              <div class="community-card__icon">🎮</div>
+              <h3 class="community-card__name">Киберспорт Swoop</h3>
+            </div>
+            <p class="community-card__description">Турниры, команды, стримы и всё, что связано с киберспортом на платформе Swoop.</p>
+            <div class="community-card__meta">
+              <span class="community-card__members">👥 356 участников</span>
+            </div>
+            <button class="community-card__join-btn btn btn--primary">Вступить</button>
+          </div>
+
+          <div class="community-card">
+            <div class="community-card__header">
+              <div class="community-card__icon">📚</div>
+              <h3 class="community-card__name">Книжный клуб</h3>
+            </div>
+            <p class="community-card__description">Читаем и обсуждаем лучшие книги по саморазвитию, бизнесу и технологиям.</p>
+            <div class="community-card__meta">
+              <span class="community-card__members">👥 215 участников</span>
+            </div>
+            <button class="community-card__join-btn btn btn--primary">Вступить</button>
+          </div>
+
+          <div class="community-card">
+            <div class="community-card__header">
+              <div class="community-card__icon">🏃</div>
+              <h3 class="community-card__name">Спорт и здоровье</h3>
+            </div>
+            <p class="community-card__description">Тренировки, питание, марафоны и здоровый образ жизни для активных людей.</p>
+            <div class="community-card__meta">
+              <span class="community-card__members">👥 178 участников</span>
+            </div>
+            <button class="community-card__join-btn btn btn--outline">Покинуть</button>
+          </div>
+
+          <div class="community-card">
+            <div class="community-card__header">
+              <div class="community-card__icon">🎵</div>
+              <h3 class="community-card__name">Музыкальная волна</h3>
+            </div>
+            <p class="community-card__description">Делимся плейлистами, находим новую музыку и обсуждаем любимых исполнителей.</p>
+            <div class="community-card__meta">
+              <span class="community-card__members">👥 423 участников</span>
+            </div>
+            <button class="community-card__join-btn btn btn--primary">Вступить</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="messengerTab" class="tab hidden">
+        <h2 class="tab__title">Мессенджер</h2>
+        <div class="messenger">
+          <aside class="messenger__sidebar">
+            <div class="messenger__search">
+              <input type="text" class="messenger__search-input" placeholder="Поиск диалогов...">
+            </div>
+            <ul class="messenger__dialogs">
+              <li class="messenger__dialog messenger__dialog--active">
+                <div class="messenger__dialog-avatar">👩‍🦰</div>
+                <div class="messenger__dialog-info">
+                  <span class="messenger__dialog-name">Ольга Смирнова</span>
+                  <span class="messenger__dialog-lastmsg">Привет! Как дела?</span>
+                </div>
+                <span class="messenger__dialog-badge">3</span>
+              </li>
+              <li class="messenger__dialog">
+                <div class="messenger__dialog-avatar">🧔</div>
+                <div class="messenger__dialog-info">
+                  <span class="messenger__dialog-name">Дмитрий Козлов</span>
+                  <span class="messenger__dialog-lastmsg">Идёшь на хакатон?</span>
+                </div>
+              </li>
+              <li class="messenger__dialog">
+                <div class="messenger__dialog-avatar">👩🏻</div>
+                <div class="messenger__dialog-info">
+                  <span class="messenger__dialog-name">Анна Белова</span>
+                  <span class="messenger__dialog-lastmsg">Спасибо за помощь!</span>
+                </div>
+              </li>
+              <li class="messenger__dialog">
+                <div class="messenger__dialog-avatar">👩‍💻</div>
+                <div class="messenger__dialog-info">
+                  <span class="messenger__dialog-name">Екатерина Волкова</span>
+                  <span class="messenger__dialog-lastmsg">Договорились на завтра</span>
+                </div>
+              </li>
+            </ul>
+          </aside>
+
+          <div class="messenger__chat">
+            <div class="messenger__chat-header">
+              <div class="messenger__chat-avatar">👩‍🦰</div>
+              <div class="messenger__chat-user-info">
+                <span class="messenger__chat-user-name">Ольга Смирнова</span>
+                <span class="messenger__chat-user-status">В сети</span>
+              </div>
+            </div>
+
+            <div class="messenger__messages">
+              <div class="messenger__message messenger__message--incoming">
+                <div class="messenger__message-bubble">Привет! Как дела? Давно не виделись!</div>
+                <span class="messenger__message-time">10:30</span>
+              </div>
+              <div class="messenger__message messenger__message--outgoing">
+                <div class="messenger__message-bubble">Привет, Оля! Всё отлично, работаю над новым проектом 😊</div>
+                <span class="messenger__message-time">10:32</span>
+              </div>
+              <div class="messenger__message messenger__message--incoming">
+                <div class="messenger__message-bubble">Здорово! Расскажешь подробнее? Может, встретимся на выходных?</div>
+                <span class="messenger__message-time">10:33</span>
+              </div>
+              <div class="messenger__message messenger__message--outgoing">
+                <div class="messenger__message-bubble">Конечно! Давай в субботу в кофейне "Синергия" в 12:00?</div>
+                <span class="messenger__message-time">10:35</span>
+              </div>
+            </div>
+
+            <div class="messenger__input-area">
+              <div class="messenger__input-wrapper">
+                <button class="messenger__attach-btn" title="Прикрепить файл">📎</button>
+                <input type="text" class="messenger__input" placeholder="Введите сообщение...">
+                <button class="messenger__send-btn btn btn--primary">Отправить</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="settingsTab" class="tab hidden">
+        <h2 class="tab__title">Настройки</h2>
+
+        <div class="settings-card">
+          <h3 class="settings-card__title">Конфиденциальность</h3>
+
+          <div class="settings-card__item">
+            <div class="settings-card__item-info">
+              <span class="settings-card__item-label">Скрыть профиль</span>
+              <span class="settings-card__item-description">Ваш профиль не будет виден другим пользователям</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" class="toggle__input">
+              <span class="toggle__slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-card__item">
+            <div class="settings-card__item-info">
+              <span class="settings-card__item-label">Двухфакторная аутентификация</span>
+              <span class="settings-card__item-description">Соответствие требованиям 152-ФЗ о персональных данных</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" class="toggle__input" checked>
+              <span class="toggle__slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-card__item">
+            <div class="settings-card__item-info">
+              <span class="settings-card__item-label">Показывать онлайн-статус</span>
+              <span class="settings-card__item-description">Друзья будут видеть, когда вы в сети</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" class="toggle__input" checked>
+              <span class="toggle__slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <h3 class="settings-card__title">Уведомления</h3>
+
+          <div class="settings-card__item">
+            <div class="settings-card__item-info">
+              <span class="settings-card__item-label">Push-уведомления</span>
+              <span class="settings-card__item-description">Мгновенные уведомления в браузере</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" class="toggle__input" checked>
+              <span class="toggle__slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-card__item">
+            <div class="settings-card__item-info">
+              <span class="settings-card__item-label">Email-рассылка</span>
+              <span class="settings-card__item-description">Получать новости и обновления на почту</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" class="toggle__input">
+              <span class="toggle__slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-card__item">
+            <div class="settings-card__item-info">
+              <span class="settings-card__item-label">Звуки сообщений</span>
+              <span class="settings-card__item-description">Звуковое оповещение при новых сообщениях</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" class="toggle__input" checked>
+              <span class="toggle__slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-card__item">
+            <div class="settings-card__item-info">
+              <span class="settings-card__item-label">Уведомления о днях рождения</span>
+              <span class="settings-card__item-description">Напоминать о днях рождения друзей</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" class="toggle__input" checked>
+              <span class="toggle__slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-actions">
+          <button class="btn btn--primary">Сохранить настройки</button>
+        </div>
+      </div>
+
+      <div id="friendProfileTab" class="tab hidden">
+        <button class="btn btn--outline" id="back-to-friends-btn" style="margin-bottom: 1rem;">← Назад к друзьям</button>
+        <div class="profile-card">
+          <div class="profile-card__header">
+            <div class="profile-card__avatar" id="view-friend-avatar">👤</div>
+            <div class="profile-card__info">
+              <h3 class="profile-card__name" id="view-friend-name">Друг</h3>
+              <span class="profile-card__status" id="view-friend-status">Не в сети</span>
+            </div>
+          </div>
+          <div class="profile-card__details">
+            <div class="profile-card__detail">
+              <span class="profile-card__detail-icon">🏙️</span>
+              <span class="profile-card__detail-text">Город: <span id="view-friend-city">—</span></span>
+            </div>
+            <div class="profile-card__detail">
+              <span class="profile-card__detail-icon">🎓</span>
+              <span class="profile-card__detail-text">ВУЗ: <span id="view-friend-university">—</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="wall" id="friend-wall"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="editProfileModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3 class="modal-title">Редактировать профиль</h3>
+      <div class="modal-field">
+        <label for="editFirstName">Имя</label>
+        <input type="text" id="editFirstName" class="modal-input" value="Артём">
+      </div>
+      <div class="modal-field">
+        <label for="editLastName">Фамилия</label>
+        <input type="text" id="editLastName" class="modal-input" value="Иванов">
+      </div>
+      <div class="modal-field">
+        <label for="editCity">Город</label>
+        <input type="text" id="editCity" class="modal-input" value="Москва">
+      </div>
+      <div class="modal-field">
+        <label for="editUniversity">Учебное заведение</label>
+        <input type="text" id="editUniversity" class="modal-input" value="МФТИ">
+      </div>
+      <div class="modal-field">
+        <label for="editInterests">Интересы (через запятую)</label>
+        <input type="text" id="editInterests" class="modal-input" value="Программирование, Дизайн, Киберспорт, Стартапы, Музыка">
+      </div>
+      <div class="modal-actions">
+        <button id="saveEditProfileBtn" class="btn btn--primary">Сохранить</button>
+        <button id="cancelEditProfileBtn" class="btn btn--outline">Отмена</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="createCommunityModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3 class="modal-title">Новое сообщество</h3>
+      <div class="modal-field">
+        <label for="communityName">Название</label>
+        <input type="text" id="communityName" class="modal-input" placeholder="Название сообщества">
+      </div>
+      <div class="modal-field">
+        <label for="communityDescription">Описание</label>
+        <textarea id="communityDescription" class="modal-textarea" rows="4" placeholder="Опишите сообщество"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button id="createCommunitySubmitBtn" class="btn btn--primary">Создать</button>
+        <button id="cancelCreateCommunityBtn" class="btn btn--outline">Отмена</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
